@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\MainController;
-use App\Http\Resources\TVShow\TvShowResource;
-use App\Http\Resources\TVShow\TvShowResourceCollection;
+use App\Http\Resources\TvShow\TvShowResource;
+use App\Http\Resources\TvShow\TvShowResourceCollection;
 use App\Models\TvShow;
 use App\Models\User;
 use Illuminate\Http\Request;
