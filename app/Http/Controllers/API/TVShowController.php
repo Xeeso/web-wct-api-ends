@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\MainController;
-use App\Http\Resources\TVShow\TVShowResource;
-use App\Http\Resources\TVShow\TVShowResourceCollection;
+use App\Http\Resources\TVShow\TvShowResource;
+use App\Http\Resources\TVShow\TvShowResourceCollection;
 use App\Models\TvShow;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -31,7 +31,7 @@ class TvShowController extends MainController
         $tvShows = TvShow::all();
 
         if ($tvShows->count() > 0) {
-            $res = new TVShowResourceCollection($tvShows);
+            $res = new TvShowResourceCollection($tvShows);
             return $this->sendSuccess(200, 'TV Shows Found', $res);
         } else {
             return $this->sendError(404, 'No Records Found');
@@ -74,7 +74,7 @@ class TvShowController extends MainController
 
         $tvShow = TvShow::create($request->all());
 
-        $res = new TVShowResource($tvShow);
+        $res = new TvShowResource($tvShow);
         return $this->sendSuccess(201, 'TV show created successfully', $res);
     }
 
@@ -108,7 +108,7 @@ class TvShowController extends MainController
             return $this->sendError(404, 'TV show not found');
         }
 
-        $res = new TVShowResource($tvShow);
+        $res = new TvShowResource($tvShow);
         return $this->sendSuccess(200, 'TV Show found', $res);
     }
 
@@ -164,7 +164,7 @@ class TvShowController extends MainController
 
         $tvShow->update($request->all());
 
-        $res = new TVShowResource($tvShow);
+        $res = new TvShowResource($tvShow);
         return $this->sendSuccess(200, 'TV show updated successfully', $res);
     }
 
