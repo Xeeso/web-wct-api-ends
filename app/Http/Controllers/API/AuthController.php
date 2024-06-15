@@ -167,6 +167,9 @@ class AuthController extends MainController
             return $this->sendError(422, 'Validation failed', $validator->errors());
         }
 
+        // Remove all whitespace characters and convert username to lowercase
+        $username = strtolower(preg_replace('/\s+/', '', $request->username));
+
         // Find the user by email
         $user = User::where('email', $request->email)->first();
 
@@ -182,7 +185,7 @@ class AuthController extends MainController
             // If the user doesn't exist, it's a sign-up operation
             // Generate a secure random password
             $password = Str::random(16);
-            $username = $request->username . rand(1000, 9999) . "";
+            $username = $username . rand(1000, 9999);
 
             // Create a new user with the provided data
             $user = User::create([

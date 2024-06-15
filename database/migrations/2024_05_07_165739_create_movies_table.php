@@ -22,10 +22,10 @@ return new class extends Migration
             // $table->string('cover_image_url')->nullable();
             $table->string('poster_image')->nullable();
             $table->string('cover_image')->nullable();
-            $table->integer('total_raters')->default(0);
-            $table->integer('total_ratings')->default(0);
-            $table->decimal('average_rating', 3, 1)->default(0);
-            $table->integer('popularity')->default(0);
+            $table->integer('total_raters')->nullable()->default(0);
+            $table->integer('total_ratings')->nullable()->default(0);
+            $table->decimal('average_rating', 3, 1)->nullable()->default(0);
+            $table->integer('popularity')->nullable()->default(0);
             $table->string('terms_status')->nullable()->default("public");
             $table->string('upload_status')->nullable();
             $table->dateTime('last_upload_date')->nullable();

@@ -151,7 +151,7 @@ class MovieController extends MainController
             return $this->sendSuccess(201, 'Movie created successfully', $res);
         } catch (\Exception $e) {
             // Handle any exceptions
-            return $this->sendError(500, 'Failed to store movie');
+            return $this->sendError(500, 'Failed to store movie', $e);
         }
     }
 
