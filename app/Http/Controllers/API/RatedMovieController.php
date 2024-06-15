@@ -16,7 +16,7 @@ class RatedMovieController extends MainController
     /**
      * @OA\Get(
      *     path="/api/rated_movies",
-     *     tags={"Rated-Movies"},
+     *     tags={"Rated_Movies"},
      *     summary="Get List rated-movies Data",
      *     description="enter your rated-movies here",
      *     operationId="rated_movies",
@@ -65,7 +65,7 @@ class RatedMovieController extends MainController
     /**
      * @OA\Post(
      *     path="/api/rated-movies",
-     *     tags={"Rated-Movies"},
+     *     tags={"Rated_Movies"},
      *     summary="rated-movies",
      *     description="rated-movies",
      *     operationId="Rated-Movies",
@@ -165,7 +165,7 @@ class RatedMovieController extends MainController
     /**
      * @OA\Get(
      *     path="/api/rated-movies/{id}",
-     *     tags={"Rated-Movies"},
+     *     tags={"Rated_Movies"},
      *     summary="Detail",
      *     description="-",
      *     operationId="rated-movies/GetById",
@@ -228,7 +228,7 @@ class RatedMovieController extends MainController
     /**
      * @OA\Delete(
      *     path="/api/rated-movies/{id}",
-     *     tags={"Rated-Movies"},
+     *     tags={"Rated_Movies"},
      *     summary="Delete rated-movies",
      *     description="-",
      *     operationId="rated-movies/delete",

@@ -69,6 +69,36 @@ class PaymentController extends MainController
         return $this->sendSuccess(200, 'Payments found', $res);
     }
 
+/**
+ * @OA\Post(
+ *     path="/api/payment",
+ *     tags={"Payment"},
+ *     summary="Create a new payment",
+ *     description="Create a new payment and handle subscription using Stripe Payment Intents.",
+ *     operationId="createPayment",
+ *     @OA\RequestBody(
+ *          required=true,
+ *          description="Payment data",
+ *          @OA\MediaType(
+ *              mediaType="multipart/form-data",
+ *              @OA\Schema(
+ *                  required={"card_number", "expiry", "cvv", "subscription_plan_id"},
+ *                  @OA\Property(property="card_number", type="string", description="Credit card number"),
+ *                  @OA\Property(property="expiry", type="string", description="Expiration date in MM/YY format"),
+ *                  @OA\Property(property="cvv", type="string", description="CVV code"),
+ *                  @OA\Property(property="name", type="string", description="Name on the card", nullable=true),
+ *                  @OA\Property(property="subscription_plan_id", type="integer", description="ID of the subscription plan"),
+ *              )
+ *          )
+ *      ),
+ *     @OA\Response(
+ *         response="default",
+ *         description="return array model payments"
+ *     ),
+ *     security={{"Bearer":{}}}
+ * )
+ */
+
     public function store(Request $request)
     {
         // Get the token from the request header

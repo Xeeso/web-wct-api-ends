@@ -588,8 +588,8 @@
                 "tags": [
                     "Historied-Movies"
                 ],
-                "summary": "Get List Historied Movies",
-                "description": "Get a list of historied movies for the authenticated user.",
+                "summary": "Get List Artists Data",
+                "description": "enter your historied_movies here",
                 "operationId": "historied_movies",
                 "responses": {
                     "200": {
@@ -606,11 +606,11 @@
                 "tags": [
                     "Historied-Movies"
                 ],
-                "summary": "Save a Historied Movie",
-                "description": "Save a movie as historied for the authenticated user.",
-                "operationId": "save_historied_movie",
+                "summary": "historied-movies",
+                "description": "historied-movies",
+                "operationId": "Historied-Movies",
                 "requestBody": {
-                    "description": "Historied movie data",
+                    "description": "form historied-movies",
                     "required": true,
                     "content": {
                         "application/json": {
@@ -633,7 +633,7 @@
                     }
                 },
                 "responses": {
-                    "201": {
+                    "200": {
                         "description": "Success"
                     }
                 },
@@ -644,19 +644,19 @@
                 ]
             }
         },
-        "/api/historied_movies/{id}": {
+        "/api/historied-movies/{id}": {
             "get": {
                 "tags": [
                     "Historied-Movies"
                 ],
-                "summary": "Get a Historied Movie by ID",
-                "description": "Get details of a specific historied movie for the authenticated user.",
-                "operationId": "get_historied_movie_by_id",
+                "summary": "Detail",
+                "description": "-",
+                "operationId": "historied-movies/GetById",
                 "parameters": [
                     {
                         "name": "id",
                         "in": "path",
-                        "description": "Historied Movie ID",
+                        "description": "Id",
                         "required": true,
                         "schema": {
                             "type": "string"
@@ -664,28 +664,25 @@
                     }
                 ],
                 "responses": {
-                    "200": {
-                        "description": "Success"
+                    "default": {
+                        "description": "return model admin"
                     }
-                },
-                "security": [
-                    {
-                        "Bearer": []
-                    }
-                ]
-            },
+                }
+            }
+        },
+        "/api/historied_movies/{id}": {
             "put": {
                 "tags": [
                     "Historied-Movies"
                 ],
-                "summary": "Update a Historied Movie",
-                "description": "Update details of a specific historied movie for the authenticated user.",
-                "operationId": "update_historied_movie",
+                "summary": "Update historied-movies",
+                "description": "-",
+                "operationId": "historied-movies/update",
                 "parameters": [
                     {
                         "name": "id",
                         "in": "path",
-                        "description": "Historied Movie ID",
+                        "description": "Id",
                         "required": true,
                         "schema": {
                             "type": "string"
@@ -693,7 +690,7 @@
                     }
                 ],
                 "requestBody": {
-                    "description": "Updated historied movie data",
+                    "description": "form admin",
                     "required": true,
                     "content": {
                         "application/json": {
@@ -730,14 +727,14 @@
                 "tags": [
                     "Historied-Movies"
                 ],
-                "summary": "Delete a Historied Movie",
-                "description": "Delete a specific historied movie for the authenticated user.",
-                "operationId": "delete_historied_movie",
+                "summary": "Delete historied-movies",
+                "description": "-",
+                "operationId": "historied-movies/delete",
                 "parameters": [
                     {
                         "name": "id",
                         "in": "path",
-                        "description": "Historied Movie ID",
+                        "description": "Id",
                         "required": true,
                         "schema": {
                             "type": "string"
@@ -1121,14 +1118,14 @@
                 "tags": [
                     "Movies"
                 ],
-                "summary": "movies",
-                "description": "movies",
-                "operationId": "Movies",
+                "summary": "Create a new movie",
+                "description": "Create a new movie with various attributes including file uploads for poster and cover images.",
+                "operationId": "createMovie",
                 "requestBody": {
-                    "description": "form movies",
+                    "description": "Form data for creating a movie",
                     "required": true,
                     "content": {
-                        "application/json": {
+                        "multipart/form-data": {
                             "schema": {
                                 "required": [
                                     "title",
@@ -1166,13 +1163,26 @@
                                         "type": "integer"
                                     },
                                     "average_rating": {
-                                        "type": "string"
+                                        "type": "number",
+                                        "format": "float"
                                     },
-                                    "poster_image": {
-                                        "type": "string"
+                                    "poster_image_file": {
+                                        "type": "string",
+                                        "format": "binary",
+                                        "nullable": true
                                     },
-                                    "cover_image": {
-                                        "type": "string"
+                                    "poster_image_url": {
+                                        "type": "string",
+                                        "nullable": true
+                                    },
+                                    "cover_image_file": {
+                                        "type": "string",
+                                        "format": "binary",
+                                        "nullable": true
+                                    },
+                                    "cover_image_url": {
+                                        "type": "string",
+                                        "nullable": true
                                     },
                                     "trailer_url": {
                                         "type": "string"
@@ -1182,7 +1192,12 @@
                                         "format": "date"
                                     },
                                     "subscription_only": {
-                                        "type": "string"
+                                        "description": "Boolean represented as 1 (true) or 0 (false)",
+                                        "type": "integer",
+                                        "enum": [
+                                            0,
+                                            1
+                                        ]
                                     },
                                     "expired_subscription_only": {
                                         "type": "string",
@@ -1196,9 +1211,14 @@
                 },
                 "responses": {
                     "default": {
-                        "description": ""
+                        "description": "return model admin"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
             }
         },
         "/api/movies/{id}": {
@@ -2161,7 +2181,7 @@
         "/api/movie-videos": {
             "get": {
                 "tags": [
-                    "Movie-Videos"
+                    "Movie_Videos"
                 ],
                 "summary": "Get List movie-videos Data",
                 "description": "enter your movie-videos here",
@@ -2176,7 +2196,7 @@
         "/api/movie_videos": {
             "post": {
                 "tags": [
-                    "Movie-Videos"
+                    "Movie_Videos"
                 ],
                 "summary": "Create a new movie video",
                 "description": "Create a new movie video with either a file upload or a URL.",
@@ -2185,7 +2205,7 @@
                     "description": "Movie video data",
                     "required": true,
                     "content": {
-                        "application/json": {
+                        "multipart/form-data": {
                             "schema": {
                                 "required": [
                                     "movie_id",
@@ -2226,10 +2246,20 @@
                                         ]
                                     },
                                     "official": {
-                                        "type": "boolean"
+                                        "description": "Boolean represented as 1 (true) or 0 (false)",
+                                        "type": "integer",
+                                        "enum": [
+                                            0,
+                                            1
+                                        ]
                                     },
                                     "subscription": {
-                                        "type": "boolean"
+                                        "description": "Boolean represented as 1 (true) or 0 (false)",
+                                        "type": "integer",
+                                        "enum": [
+                                            0,
+                                            1
+                                        ]
                                     },
                                     "subscription_start_date": {
                                         "type": "string",
@@ -2262,7 +2292,7 @@
         "/api/movie-videos/{id}": {
             "get": {
                 "tags": [
-                    "Movie-Videos"
+                    "Movie_Videos"
                 ],
                 "summary": "Detail",
                 "description": "-",
@@ -2286,7 +2316,7 @@
             },
             "put": {
                 "tags": [
-                    "Movie-Videos"
+                    "Movie_Videos"
                 ],
                 "summary": "Update movie-videos",
                 "description": "-",
@@ -2333,7 +2363,7 @@
             },
             "delete": {
                 "tags": [
-                    "Movie-Videos"
+                    "Movie_Videos"
                 ],
                 "summary": "Delete movie-videos",
                 "description": "-",
@@ -2369,6 +2399,66 @@
                         "description": "return array model payments"
                     }
                 }
+            }
+        },
+        "/api/payment": {
+            "post": {
+                "tags": [
+                    "Payment"
+                ],
+                "summary": "Create a new payment",
+                "description": "Create a new payment and handle subscription using Stripe Payment Intents.",
+                "operationId": "createPayment",
+                "requestBody": {
+                    "description": "Payment data",
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "card_number",
+                                    "expiry",
+                                    "cvv",
+                                    "subscription_plan_id"
+                                ],
+                                "properties": {
+                                    "card_number": {
+                                        "description": "Credit card number",
+                                        "type": "string"
+                                    },
+                                    "expiry": {
+                                        "description": "Expiration date in MM/YY format",
+                                        "type": "string"
+                                    },
+                                    "cvv": {
+                                        "description": "CVV code",
+                                        "type": "string"
+                                    },
+                                    "name": {
+                                        "description": "Name on the card",
+                                        "type": "string",
+                                        "nullable": true
+                                    },
+                                    "subscription_plan_id": {
+                                        "description": "ID of the subscription plan",
+                                        "type": "integer"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "default": {
+                        "description": "return array model payments"
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
             }
         },
         "/api/payments/{id}": {
@@ -2424,7 +2514,7 @@
         "/api/rated_movies": {
             "get": {
                 "tags": [
-                    "Rated-Movies"
+                    "Rated_Movies"
                 ],
                 "summary": "Get List rated-movies Data",
                 "description": "enter your rated-movies here",
@@ -2444,7 +2534,7 @@
         "/api/rated-movies": {
             "post": {
                 "tags": [
-                    "Rated-Movies"
+                    "Rated_Movies"
                 ],
                 "summary": "rated-movies",
                 "description": "rated-movies",
@@ -2491,7 +2581,7 @@
         "/api/rated-movies/{id}": {
             "get": {
                 "tags": [
-                    "Rated-Movies"
+                    "Rated_Movies"
                 ],
                 "summary": "Detail",
                 "description": "-",
@@ -2515,7 +2605,7 @@
             },
             "delete": {
                 "tags": [
-                    "Rated-Movies"
+                    "Rated_Movies"
                 ],
                 "summary": "Delete rated-movies",
                 "description": "-",
@@ -3034,25 +3124,7 @@
                 ]
             }
         },
-        "/api/saved_movies": {
-            "get": {
-                "tags": [
-                    "Saved-Movies"
-                ],
-                "summary": "Get List Artists Data",
-                "description": "enter your saved_movies here",
-                "operationId": "saved_movies",
-                "responses": {
-                    "200": {
-                        "description": "Success"
-                    }
-                },
-                "security": [
-                    {
-                        "Bearer": []
-                    }
-                ]
-            },
+        "/api/saved-movies": {
             "post": {
                 "tags": [
                     "Saved-Movies"
@@ -3084,15 +3156,10 @@
                     }
                 },
                 "responses": {
-                    "200": {
-                        "description": "Success"
+                    "default": {
+                        "description": ""
                     }
-                },
-                "security": [
-                    {
-                        "Bearer": []
-                    }
-                ]
+                }
             }
         },
         "/api/saved-movies/{id}": {
@@ -3119,9 +3186,7 @@
                         "description": "return model admin"
                     }
                 }
-            }
-        },
-        "/api/saved_movies/{id}": {
+            },
             "put": {
                 "tags": [
                     "Saved-Movies"
@@ -3164,15 +3229,10 @@
                     }
                 },
                 "responses": {
-                    "200": {
-                        "description": "Success"
+                    "default": {
+                        "description": ""
                     }
-                },
-                "security": [
-                    {
-                        "Bearer": []
-                    }
-                ]
+                }
             },
             "delete": {
                 "tags": [
@@ -3193,15 +3253,10 @@
                     }
                 ],
                 "responses": {
-                    "200": {
-                        "description": "Success"
+                    "default": {
+                        "description": ""
                     }
-                },
-                "security": [
-                    {
-                        "Bearer": []
-                    }
-                ]
+                }
             }
         },
         "/api/subscription_plans": {

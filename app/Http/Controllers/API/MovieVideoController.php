@@ -16,7 +16,7 @@ class MovieVideoController extends MainController
     /**
      * @OA\Get(
      *     path="/api/movie-videos",
-     *     tags={"Movie-Videos"},
+     *     tags={"Movie_Videos"},
      *     summary="Get List movie-videos Data",
      *     description="enter your movie-videos here",
      *     operationId="movie-videos",
@@ -30,6 +30,10 @@ class MovieVideoController extends MainController
     {
         $movieVideos = MovieVideo::all();
 
+        if (!Gate::allows('admin', User::class)) {
+            return $this->sendError(403, 'You are not allowed');
+        }
+
         if ($movieVideos->count() > 0) {
             $res = new MovieVideoResourceCollection($movieVideos);
             return $this->sendSuccess(200, 'Movie video found', $res);
@@ -38,37 +42,40 @@ class MovieVideoController extends MainController
         }
     }
     /**
-     * @OA\Post(
-     *     path="/api/movie_videos",
-     *     tags={"Movie-Videos"},
-     *     summary="Create a new movie video",
-     *     description="Create a new movie video with either a file upload or a URL.",
-     *     operationId="createMovieVideo",
-     *     @OA\RequestBody(
-     *          required=true,
-     *          description="Movie video data",
-     *          @OA\JsonContent(
-     *              required={"movie_id", "type", "official", "subscription"},
-     *              @OA\Property(property="movie_id", type="string"),
-     *              @OA\Property(property="video_file", type="string", format="binary", nullable=true),
-     *              @OA\Property(property="video_url", type="string", nullable=true),
-     *              @OA\Property(property="season_number", type="integer", nullable=true),
-     *              @OA\Property(property="episode_number", type="integer", nullable=true),
-     *              @OA\Property(property="part_number", type="integer", nullable=true),
-     *              @OA\Property(property="type", type="string", enum={"movie", "trailer"}),
-     *              @OA\Property(property="official", type="boolean"),
-     *              @OA\Property(property="subscription", type="boolean"),
-     *              @OA\Property(property="subscription_start_date", type="string", format="date", nullable=true),
-     *              @OA\Property(property="subscription_end_date", type="string", format="date", nullable=true),
-     *          ),
-     *      ),
-     *     @OA\Response(
-     *         response="default",
-     *         description="return array model movie-videos"
-     *     ),
-     *     security={{"Bearer":{}}}
-     * )
-     */
+ * @OA\Post(
+ *     path="/api/movie_videos",
+ *     tags={"Movie_Videos"},
+ *     summary="Create a new movie video",
+ *     description="Create a new movie video with either a file upload or a URL.",
+ *     operationId="createMovieVideo",
+ *     @OA\RequestBody(
+ *          required=true,
+ *          description="Movie video data",
+ *          @OA\MediaType(
+ *              mediaType="multipart/form-data",
+ *              @OA\Schema(
+ *                  required={"movie_id", "type", "official", "subscription"},
+ *                  @OA\Property(property="movie_id", type="string"),
+ *                  @OA\Property(property="video_file", type="string", format="binary", nullable=true),
+ *                  @OA\Property(property="video_url", type="string", nullable=true),
+ *                  @OA\Property(property="season_number", type="integer", nullable=true),
+ *                  @OA\Property(property="episode_number", type="integer", nullable=true),
+ *                  @OA\Property(property="part_number", type="integer", nullable=true),
+ *                  @OA\Property(property="type", type="string", enum={"movie", "trailer"}),
+ *                  @OA\Property(property="official", type="integer", enum={0, 1}, description="Boolean represented as 1 (true) or 0 (false)"),
+ *                  @OA\Property(property="subscription", type="integer", enum={0, 1}, description="Boolean represented as 1 (true) or 0 (false)"),
+ *                  @OA\Property(property="subscription_start_date", type="string", format="date", nullable=true),
+ *                  @OA\Property(property="subscription_end_date", type="string", format="date", nullable=true)
+ *              )
+ *          )
+ *      ),
+ *     @OA\Response(
+ *         response="default",
+ *         description="return array model movie-videos"
+ *     ),
+ *     security={{"Bearer":{}}} 
+ * )
+ */
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -107,8 +114,6 @@ class MovieVideoController extends MainController
 
             $movieVideo = MovieVideo::create([
                 'movie_id' => $request->movie_id,
-                // 'video_file' => $video,
-                // 'video_url' => $request->video_url,
                 'video' => $video,
                 'season_number' => $request->season_number,
                 'episode_number' => $request->episode_number,
@@ -132,7 +137,7 @@ class MovieVideoController extends MainController
     /**
      * @OA\Get(
      *     path="/api/movie-videos/{id}",
-     *     tags={"Movie-Videos"},
+     *     tags={"Movie_Videos"},
      *     summary="Detail",
      *     description="-",
      *     operationId="movie-videos/GetById",
@@ -206,11 +211,11 @@ class MovieVideoController extends MainController
         $res = MovieVideoResource::collection($filteredVideos);
         return $this->sendSuccess(200, 'Movie videos found', $res);
     }
-    /////
+    
     /**
      * @OA\Put(
      *     path="/api/movie-videos/{id}",
-     *     tags={"Movie-Videos"},
+     *     tags={"Movie_Videos"},
      *     summary="Update movie-videos",
      *     description="-",
      *     operationId="movie-videos/update",
@@ -314,7 +319,7 @@ class MovieVideoController extends MainController
     /**
      * @OA\Delete(
      *     path="/api/movie-videos/{id}",
-     *     tags={"Movie-Videos"},
+     *     tags={"Movie_Videos"},
      *     summary="Delete movie-videos",
      *     description="-",
      *     operationId="movie-videos/delete",
@@ -333,9 +338,6 @@ class MovieVideoController extends MainController
      *     )
      * )
      */
-    // /**
-    //  * Remove the specified resource from storage.
-    //  */
     public function destroy($id)
     {
         $movieVideo = MovieVideo::find($id);

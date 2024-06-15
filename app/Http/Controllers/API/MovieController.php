@@ -39,41 +39,46 @@ class MovieController extends MainController
         }
     }
     /**
-     * @OA\Post(
-     *     path="/api/movies",
-     *     tags={"Movies"},
-     *     summary="movies",
-     *     description="movies",
-     *     operationId="Movies",
-     *     @OA\RequestBody(
-     *          required=true,
-     *          description="form movies",
-     *          @OA\JsonContent(
-     *            required={"title", "overview", "run_time", "release_date", "total_likes", "total_ratings",
-     *                      "average_rating", "poster_image", "cover_image", "trailer_url", "last_upload_date",
-     *                       "subscription_only", "expired_subscription_only"},
-     *              @OA\Property(property="title", type="string"),
-     *              @OA\Property(property="overview", type="string"),
-     * @OA\Property(property="run_time", type="integer"),
-     * @OA\Property(property="release_date", type="date"),
-     *@OA\Property(property="total_likes", type="integer"),
-     * @OA\Property(property="total_ratings", type="integer"),
-     * @OA\Property(property="average_rating", type="string"),
-     * @OA\Property(property="poster_image", type="string"),
-     * @OA\Property(property="cover_image", type="string"),
-     *@OA\Property(property="trailer_url", type="string"),
-     *@OA\Property(property="last_upload_date", type="date"),
-     *@OA\Property(property="subscription_only", type="string"),
-     *@OA\Property(property="expired_subscription_only", type="date"),
-     *          ),
-     *      ),
-     *     @OA\Response(
-     *         response="default",
-     *         description=""
-     *        
-     *     )
-     * )
-     */
+ * @OA\Post(
+ *     path="/api/movies",
+ *     tags={"Movies"},
+ *     summary="Create a new movie",
+ *     description="Create a new movie with various attributes including file uploads for poster and cover images.",
+ *     operationId="createMovie",
+ *     @OA\RequestBody(
+ *          required=true,
+ *          description="Form data for creating a movie",
+ *          @OA\MediaType(
+ *              mediaType="multipart/form-data",
+ *              @OA\Schema(
+ *                  required={"title", "overview", "run_time", "release_date", "total_likes", "total_ratings",
+ *                            "average_rating", "poster_image", "cover_image", "trailer_url", "last_upload_date",
+ *                            "subscription_only", "expired_subscription_only"},
+ *                  @OA\Property(property="title", type="string"),
+ *                  @OA\Property(property="overview", type="string"),
+ *                  @OA\Property(property="run_time", type="integer"),
+ *                  @OA\Property(property="release_date", type="string", format="date"),
+ *                  @OA\Property(property="total_likes", type="integer"),
+ *                  @OA\Property(property="total_ratings", type="integer"),
+ *                  @OA\Property(property="average_rating", type="number", format="float"),
+ *                  @OA\Property(property="poster_image_file", type="string", format="binary", nullable=true),
+ *                  @OA\Property(property="poster_image_url", type="string", nullable=true),
+ *                  @OA\Property(property="cover_image_file", type="string", format="binary", nullable=true),
+ *                  @OA\Property(property="cover_image_url", type="string", nullable=true),
+ *                  @OA\Property(property="trailer_url", type="string"),
+ *                  @OA\Property(property="last_upload_date", type="string", format="date"),
+ *                  @OA\Property(property="subscription_only", type="integer", enum={0, 1}, description="Boolean represented as 1 (true) or 0 (false)"),
+ *                  @OA\Property(property="expired_subscription_only", type="string", format="date"),
+ *              )
+ *          )
+ *      ),
+ *      @OA\Response(
+ *         response="default",
+ *         description="return model admin"
+ *     ),
+ *     security={{"Bearer":{}}}
+ * )
+ */
     public function store(Request $request)
     {
         // Validate the request data
