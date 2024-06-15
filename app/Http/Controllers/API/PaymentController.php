@@ -157,24 +157,25 @@ class PaymentController extends MainController
                     'name' => $request->name,
                 ]);
 
+                if (!$payment || !$payment->id) {
+                    return $this->sendError(500, 'Failed to create payment record');
+                }
+
                 // Update user's role to 'User Subscription' if not Admin
                 if ($user->role !== 'Admin') {
                     $user->role = 'User Subscription';
                     $user->save();
                 }
 
-
-
                 // Store subscription details in user_subscription table
                 UserSubscription::create([
                     'user_id' => $user->id,
-                    'payment_id' => $payment->transaction_id, // Add payment ID here
+                    'payment_id' => $payment->id, // Ensure $payment->id is populated correctly
                     'subscription_plan_id' => $request->subscription_plan_id,
                     'subscription_start_date' => now(),
                     'subscription_end_date' => now()->addDays($duration),
                     'subscription_status' => 'running',
                 ]);
-
 
                 $res = new UserResource($user);
                 return $this->sendSuccess(200, 'Payment success', $res);

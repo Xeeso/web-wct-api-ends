@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\MainController;
-use App\Http\Resources\TVShow\TVShowResource;
-use App\Http\Resources\TVShow\TVShowResourceCollection;
-use App\Models\TVShow;
+use App\Http\Resources\TvShow\TvShowResource;
+use App\Http\Resources\TvShow\TvShowResourceCollection;
+use App\Models\TvShow;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
@@ -28,10 +28,10 @@ class TvShowController extends MainController
      */
     public function index()
     {
-        $tvShows = TVShow::all();
+        $tvShows = TvShow::all();
 
         if ($tvShows->count() > 0) {
-            $res = new TVShowResourceCollection($tvShows);
+            $res = new TvShowResourceCollection($tvShows);
             return $this->sendSuccess(200, 'TV Shows Found', $res);
         } else {
             return $this->sendError(404, 'No Records Found');
@@ -72,9 +72,9 @@ class TvShowController extends MainController
             return $this->sendError(403, 'You are not allowed');
         }
 
-        $tvShow = TVShow::create($request->all());
+        $tvShow = TvShow::create($request->all());
 
-        $res = new TVShowResource($tvShow);
+        $res = new TvShowResource($tvShow);
         return $this->sendSuccess(201, 'TV show created successfully', $res);
     }
 
@@ -102,13 +102,13 @@ class TvShowController extends MainController
      */
     public function show($id)
     {
-        $tvShow = TVShow::find($id);
+        $tvShow = TvShow::find($id);
 
         if (!$tvShow) {
             return $this->sendError(404, 'TV show not found');
         }
 
-        $res = new TVShowResource($tvShow);
+        $res = new TvShowResource($tvShow);
         return $this->sendSuccess(200, 'TV Show found', $res);
     }
 
@@ -144,7 +144,7 @@ class TvShowController extends MainController
 
     public function update(Request $request, $id)
     {
-        $tvShow = TVShow::find($id);
+        $tvShow = TvShow::find($id);
 
         if (!$tvShow) {
             return $this->sendError(404, 'TV show not found');
@@ -164,7 +164,7 @@ class TvShowController extends MainController
 
         $tvShow->update($request->all());
 
-        $res = new TVShowResource($tvShow);
+        $res = new TvShowResource($tvShow);
         return $this->sendSuccess(200, 'TV show updated successfully', $res);
     }
 
@@ -190,7 +190,7 @@ class TvShowController extends MainController
      */
     public function destroy($id)
     {
-        $tvShow = TVShow::find($id);
+        $tvShow = TvShow::find($id);
 
         if (!$tvShow) {
             return $this->sendError(404, 'TV show not found');

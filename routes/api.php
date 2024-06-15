@@ -12,8 +12,6 @@ use App\Http\Controllers\API\MovieCountryController;
 use App\Http\Controllers\API\MovieGenreController;
 use App\Http\Controllers\API\MovieLanguageController;
 use App\Http\Controllers\API\MoviePhotoController;
-use App\Http\Controllers\API\MovieSerieController;
-use App\Http\Controllers\API\MovieSubscriptionController;
 use App\Http\Controllers\API\MovieVideoController;
 use App\Http\Controllers\API\PaymentController;
 use App\Http\Controllers\API\PostController;

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\MainController;
+use App\Http\Resources\UserSubscription\UserSubscriptionResource;
 use App\Models\User;
 use App\Models\UserSubscription;
 use Illuminate\Http\Request;
@@ -50,8 +51,10 @@ class UserSubscriptionController extends MainController
             return $this->sendError(404, 'No running subscriptions found for the user');
         }
 
+        $res = new UserSubscriptionResource($subscriptions);
+
         // Return a success response with the subscriptions
-        return $this->sendSuccess(200, 'Running subscriptions found', $subscriptions);
+        return $this->sendSuccess(200, 'Running subscriptions found', $res);
     }
 
     /**

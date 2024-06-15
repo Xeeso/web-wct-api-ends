@@ -26,4 +26,9 @@ class NewMovieEvent implements ShouldBroadcast
     {
         return new Channel('new-movie-channel');
     }
+
+    public function broadcastAs()
+    {
+        return 'NewMovieEvent';
+    }
 }
