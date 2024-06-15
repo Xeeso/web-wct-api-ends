@@ -133,7 +133,7 @@ class PaymentController extends MainController
 
         try {
             // Create charge using Stripe API
-            $charge = \Stripe\Charge::create([
+            $charge = Charge::create([
                 'amount' => $amount * 100, // Convert to cents
                 'currency' => 'usd',
                 'description' => $request->description ?? 'Subscription Charge', // Use provided description or default
