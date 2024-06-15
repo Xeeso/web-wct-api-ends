@@ -2399,12 +2399,10 @@
                         "description": "return array model payments"
                     }
                 }
-            }
-        },
-        "/api/payment": {
+            },
             "post": {
                 "tags": [
-                    "Payment"
+                    "Payments"
                 ],
                 "summary": "Create a new payment",
                 "description": "Create a new payment and handle subscription using Stripe Payment Intents.",

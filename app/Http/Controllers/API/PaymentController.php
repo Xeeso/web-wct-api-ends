@@ -71,8 +71,8 @@ class PaymentController extends MainController
 
 /**
  * @OA\Post(
- *     path="/api/payment",
- *     tags={"Payment"},
+ *     path="/api/payments",
+ *     tags={"Payments"},
  *     summary="Create a new payment",
  *     description="Create a new payment and handle subscription using Stripe Payment Intents.",
  *     operationId="createPayment",
