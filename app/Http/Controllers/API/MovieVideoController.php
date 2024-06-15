@@ -206,6 +206,7 @@ class MovieVideoController extends MainController
         $res = MovieVideoResource::collection($filteredVideos);
         return $this->sendSuccess(200, 'Movie videos found', $res);
     }
+    ///
     /**
      * @OA\Put(
      *     path="/api/movie-videos/{id}",
